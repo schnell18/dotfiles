@@ -1,0 +1,25 @@
+[user]
+	email = schnell18@gmail.com
+	name = Justin Zhang
+[core]
+	editor = vim
+	autocrlf = input
+[color]
+	ui = true
+[merge]
+	tool = vimdiff
+[push]
+	default = simple
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+[credential]
+	helper = store
+[init]
+	defaultBranch = master
+[url "ssh://git@tinker.cf"]
+	insteadOf = https://tinker.cf
+[url "ssh://git@tinker.cf"]
+	insteadOf = http://tinker.cf
