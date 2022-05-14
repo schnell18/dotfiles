@@ -7,17 +7,13 @@ fi
 
 neofetch
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$HOME/go/bin:/usr/local/bin:$PATH:/usr/local/texlive/2021/bin/x86_64-linux:$HOME/.luarocks/bin
+export PATH=$HOME/bin:$HOME/go/bin:/usr/local/bin:$PATH:/usr/local/texlive/2021/bin/x86_64-linux
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 
 # gvm setup
 export PATH="$HOME/.gvm/bin:$PATH"
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-
-# export http_proxy=socks5://127.0.0.1:1080
-# export https_proxy=socks5://127.0.0.1:1080
-
 
 export MANPATH=$MANPATH:/usr/local/texlive/2021/texmf-dist/doc/man
 export INFOPATH=$INFOPATH:/usr/local/texlive/2021/texmf-dist/doc/info
@@ -134,6 +130,4 @@ export NVM_DIR="$HOME/.nvm"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-[ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
 

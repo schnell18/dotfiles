@@ -2,7 +2,7 @@
 	email = schnell18@gmail.com
 	name = Justin Zhang
 [core]
-	editor = vim
+	editor = nvim
 	autocrlf = input
 [color]
 	ui = true
@@ -19,7 +19,3 @@
 	helper = store
 [init]
 	defaultBranch = master
-[url "ssh://git@tinker.cf"]
-	insteadOf = https://tinker.cf
-[url "ssh://git@tinker.cf"]
-	insteadOf = http://tinker.cf
