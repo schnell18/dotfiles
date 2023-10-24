@@ -5,21 +5,25 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-neofetch
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$HOME/go/bin:/usr/local/bin:$PATH:/usr/local/texlive/2021/bin/x86_64-linux
+export PATH=$HOME/bin:$HOME/go/bin:/usr/local/bin:$PATH
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
+
+# Hive related settings
+export HIVE_HOME="$HOME/warez/hive/apache-hive-3.1.3-bin"
+export HADOOP_HOME="$HOME/warez/hadoop/hadoop-3.3.6"
+export PATH="$HADOOP_HOME/bin:$HIVE_HOME/bin:$PATH"
+
+# Python scripts
+export PATH="$PATH:$HOME/Library/Python/3.11/bin"
 
 # gvm setup
 export PATH="$HOME/.gvm/bin:$PATH"
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
-export MANPATH=$MANPATH:/usr/local/texlive/2021/texmf-dist/doc/man
-export INFOPATH=$INFOPATH:/usr/local/texlive/2021/texmf-dist/doc/info
-
 # Path to your oh-my-zsh installation.
-export ZSH="/home/justin/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -120,9 +124,6 @@ alias tf="terraform"
 
 alias murl="curl -vv --cert ~/.minikube/profiles/minikube/client.crt --key ~/.minikube/profiles/minikube/client.key --cacert ~/.minikube/ca.crt"
 export EDITOR=nvim
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/justin/.sdkman"
-[[ -s "/home/justin/.sdkman/bin/sdkman-init.sh" ]] && source "/home/justin/.sdkman/bin/sdkman-init.sh"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -130,4 +131,34 @@ export NVM_DIR="$HOME/.nvm"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+
+# neovim + zathura
+export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
+
+export JAVA_HOME=$HOME/.sdkman/candidates/java/current
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+export HOMEBREW_BOTTLE_DOMAIN=''
+
+# virtualization settings
+export LIBVIRT_DEFAULT_URI=qemu:///session
+export VAGRANT_DEFAULT_PROVIDER=libvirt
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/justin/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/justin/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/justin/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/justin/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 

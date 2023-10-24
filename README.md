@@ -38,12 +38,8 @@ After you stow tmux, you need clone the sub modules of tmux by:
 On first launch of tmux, you press `C a I`(Control a Shift i) to install plugins.
 
 ## neovim
-After you stow nvim, you need install plugins required by neovim by:
-
-    nvim -c 'PlugInstall'
-
-This installs a dozen of plugins for you.
-You may also install plugin inside neovim for the first time.
+dotfiles now links to the neovim config managed by nvchad, plugin install occur
+on firt time neovim is started.
 
 [1]: https://www.gnu.org/software/stow/
 [2]: http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html
