@@ -112,7 +112,8 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: JetBrainsMonoNL Nerd Font
+    family: GoMono Nerd Font
+    # family: JetBrainsMonoNL Nerd Font
     # family: MesloLGS NF
 
     # The `style` can be specified to pick a specific face.
