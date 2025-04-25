@@ -115,6 +115,8 @@ font:
     family: GoMono Nerd Font
     # family: JetBrainsMonoNL Nerd Font
     # family: MesloLGS NF
+    # family: JetBrains Mono
+    # family: IntelOne Mono
 
     # The `style` can be specified to pick a specific face.
     style: Regular

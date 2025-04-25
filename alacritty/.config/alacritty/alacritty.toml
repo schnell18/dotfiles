@@ -1,0 +1,10 @@
+[font]
+size = 15.0
+
+[font.normal]
+family = "IntelOne Mono"
+style = "Regular"
+
+[window.dimensions]
+columns = 140
+lines = 38

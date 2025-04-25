@@ -1,6 +1,7 @@
 [user]
 	email = schnell18@gmail.com
 	name = Justin Zhang
+	signingkey = 8C0D112F748CC82E
 [core]
 	editor = nvim
 	autocrlf = input
@@ -15,6 +16,14 @@
 	br = branch
 	ci = commit
 	st = status
+	dfs = diff --staged
+	mgf = merge --ff-only
+	logg = log --graph --decorate --oneline --abbrev-commit --all
+	logl = log --graph --decorate --oneline --abbrev-commit
+	logp = log --oneline --abbrev-commit
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	desc = describe
 [credential]
 	helper = store
 [init]
