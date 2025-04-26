@@ -39,7 +39,6 @@ The following softwares are recommended:
 - [jq][4]
 - [tmux][5]
 - [neovim][6]
-- [neofetch][7]
 - [sdkman][8]
 - [nvm][9]
 - [gvm][10]
@@ -51,7 +50,33 @@ The following softwares are recommended:
 
 While running `stow TOOL_NAME` is sufficient for most tools, some tools do
 require additional setup. This section details the extra instructions to follow
-for such tools.
+for such tools on MacOS. Adapt the commands to your own OS distribution.
+
+    # misc tools setup
+    # 1. install jq lsd regrep curl
+    # 2. powerlevel10k setup
+
+    # zsh setup
+    # 1. oh-my-zsh setup
+    # 2. powerlevel10k setup
+
+    # tmux setup
+    # 1. install tmux
+    # 2. configure tmux
+
+    # python setup
+    # 1. install miniconda
+
+    # golang setup
+    # 1. install gvm
+
+    # neovim setup
+    # 1. install neovim
+    # 2. enable neovim config
+
+    # localenv setup
+    # 1. install podman
+    # 2. install localenv
 
 
 ### tmux
@@ -65,6 +90,13 @@ On first launch of tmux, you press `C a I`(Control a Shift i) to install plugins
 ### neovim
 dotfiles now links to the neovim config managed by nvchad, plugin install occur
 on firt time neovim is started.
+
+## Complete setup example
+
+This section presents the complete instructions to setup .zsh CLI environment
+for golang, Python development using neovim.
+
+
 
 [1]: https://www.gnu.org/software/stow/
 [2]: http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html
