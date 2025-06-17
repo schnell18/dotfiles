@@ -1,5 +1,27 @@
 #!/bin/bash
 
+function ensure_install {
+    PKGS="$*"
+    for PKG in $PKGS; do
+        case $OS_DISTRO in
+            macos)
+                if ! brew list "$PKG" >/dev/null 2>&1; then
+                    brew install "$PKG"
+                fi
+            ;;
+            ubuntu)
+                if ! dpkg -s "$PKG" >/dev/null 2>&1; then
+                    sudo apt-get install -y "$PKG"
+                fi
+            ;;
+            *)
+                echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
+                exit 1
+            ;;
+        esac
+    done
+}
+
 # This function doesn't fail installation when package has been installed.
 function brew_install {
     PKGS="$*"
@@ -122,7 +144,30 @@ function setup_nvim {
             brew_install neovim ripgrep
         ;;
         ubuntu)
-            sudo apt-get install -y neovim ripgrep
+            if [[ ! -f /opt/nvim/bin/nvim ]]; then
+                curl -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz \
+                     -o /tmp/nvim-linux-x86_64.tar.gz
+                sudo rm -rf /opt/nvim
+                sudo tar -C /opt -xzf /tmp/nvim-linux-x86_64.tar.gz
+                sudo mv /opt/nvim-linux-x86_64 /opt/nvim
+                rm -f /tmp/nvim-linux-x86_64.tar.gz
+            fi
+            ensure_install ripgrep
+        ;;
+        *)
+            echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
+            exit 1
+        ;;
+    esac
+}
+
+function setup_python {
+    case $OS_DISTRO in
+        macos)
+            ensure_install python3
+        ;;
+        ubuntu)
+            ensure_install python3-venv
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -152,6 +197,7 @@ function setup_r {
 
 # fail fast by exiting on first error
 set -e
+set -x
 
 OS_DISTRO="macos"
 _OS=$(uname)
@@ -172,15 +218,15 @@ case $_OS in
     ;;
 esac
 
-# ensure pre-requisite software are installed: homebrew, stow
-ret=$(command -v stow)
-if [[ $? -ne 0 ]]; then
-    brew_install stow
+# ensure pre-requisite software are installed: stow, homebrew (MacOS only)
+if [[ $OS_DISTRO == "macos" ]]; then
+    if ! command -v brew; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
 fi
 
-ret=$(command -v brew)
-if [[ $? -ne 0 ]]; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if ! command -v stow; then
+    ensure_install stow
 fi
 
 setup_funcs=$(grep -e "^function" $0 | cut -d' ' -f2)
@@ -192,8 +238,7 @@ fi
 for comp in $comps; do
     # validate the component specified by user is supported
     setup_func="setup_$(echo $comp | tr '[:upper:]' '[:lower:]')"
-    ret=$(echo $setup_funcs | grep -q -w $setup_func)
-    if [[ $? -ne 0 ]]; then
+    if ! echo $setup_funcs | grep -q -w $setup_func; then
         echo "$comp is not supported" 1>&2
         exit 1
     fi

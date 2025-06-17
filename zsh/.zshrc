@@ -9,7 +9,7 @@ setup_alias ()
 }
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/.local/bin:$HOME/go/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:/opt/nvim/bin:$HOME/go/bin:/usr/local/bin:$PATH
 
 # load sensitive settings from ~/.config/zsh/.szshrc
 if [ -f ~/.config/zsh/.szshrc ]; then
