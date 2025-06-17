@@ -23,14 +23,14 @@ function ensure_install {
 }
 
 # This function doesn't fail installation when package has been installed.
-function brew_install {
-    PKGS="$*"
-    for PKG in $PKGS; do
-        if ! brew list "$PKG" >/dev/null 2>&1; then
-            brew install "$PKG"
-        fi
-    done
-}
+# function brew_install {
+#     PKGS="$*"
+#     for PKG in $PKGS; do
+#         if ! brew list "$PKG" >/dev/null 2>&1; then
+#             brew install "$PKG"
+#         fi
+#     done
+# }
 
 function get_os_dist {
     if [ -f /etc/os-release ]; then
@@ -51,7 +51,7 @@ function get_os_dist {
 function setup_golang {
     case $OS_DISTRO in
         macos)
-            brew_install bison go
+            ensure_install bison go
         ;;
         ubuntu)
             sudo apt-get install -y bison golang-go
@@ -73,7 +73,7 @@ function setup_golang {
 function setup_lua {
     case $OS_DISTRO in
         macos)
-            brew_install luarocks
+            ensure_install luarocks
         ;;
         ubuntu)
             sudo apt-get install -y luarocks
@@ -104,7 +104,7 @@ function setup_git {
 function setup_ghostty {
     case $OS_DISTRO in
         macos)
-            brew_install ghostty
+            ensure_install ghostty
         ;;
         ubuntu)
             sudo apt-get install -y ghostty
@@ -120,7 +120,7 @@ function setup_tmux {
     # install tmux
     case $OS_DISTRO in
         macos)
-            brew_install tmux
+            ensure_install tmux
         ;;
         ubuntu)
             sudo apt-get install -y tmux
@@ -141,7 +141,7 @@ function setup_nvim {
     # install neovim
     case $OS_DISTRO in
         macos)
-            brew_install neovim ripgrep
+            ensure_install neovim ripgrep
         ;;
         ubuntu)
             if [[ ! -f /opt/nvim/bin/nvim ]]; then
@@ -180,7 +180,7 @@ function setup_r {
     # install R
     case $OS_DISTRO in
         macos)
-            brew_install R
+            ensure_install R
         ;;
         ubuntu)
             sudo apt-get install -y R
@@ -197,7 +197,7 @@ function setup_r {
 
 # fail fast by exiting on first error
 set -e
-set -x
+[[ -z $DEBUG_SETUP ]] || set -x
 
 OS_DISTRO="macos"
 _OS=$(uname)

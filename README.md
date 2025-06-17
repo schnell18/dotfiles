@@ -1,7 +1,8 @@
 # Introduction
 
-Manage config files using [stow][1]. The general procedure to enable
-stow-managed application config is:
+This project automates common development tools installation and configuration
+under MacOS and Linux (currently only Ubuntu is supported) by leveraging
+[stow][1]. The general procedure to enable stow-managed tools is:
 
 - clone [dotfiles][3] project
 - change directory to `~/dotfiles` or whatever you see fit
