@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# This function doesn't fail installation when package has been installed.
+function brew_install {
+    PKGS="$*"
+    for PKG in $PKGS; do
+        if ! brew list "$PKG" >/dev/null 2>&1; then
+            brew install "$PKG"
+        fi
+    done
+}
+
 function get_os_dist {
     if [ -f /etc/os-release ]; then
         . /etc/os-release
@@ -16,6 +26,54 @@ function get_os_dist {
     fi
 }
 
+function setup_golang {
+    case $OS_DISTRO in
+        macos)
+            brew_install bison go
+        ;;
+        ubuntu)
+            sudo apt-get install -y bison golang-go
+        ;;
+        *)
+            echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
+            exit 1
+        ;;
+    esac
+    # Download and install gvm:
+    if [[ ! -d $HOME/.gvm ]]; then
+        bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+    fi
+
+    # gvm install go1.23
+    # gvm use go1.23 --default
+}
+
+function setup_lua {
+    case $OS_DISTRO in
+        macos)
+            brew_install luarocks
+        ;;
+        ubuntu)
+            sudo apt-get install -y luarocks
+        ;;
+        *)
+            echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
+            exit 1
+        ;;
+    esac
+}
+
+function setup_node {
+    # Download and install nvm:
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+    # in lieu of restarting the shell
+    . "$HOME/.nvm/nvm.sh"
+
+    # Download and install Node.js:
+    nvm install 22
+}
+
 function setup_git {
     echo "Setting up git"
     # The rest of function is intentionally left blank.
@@ -24,10 +82,10 @@ function setup_git {
 function setup_ghostty {
     case $OS_DISTRO in
         macos)
-            brew install ghostty
+            brew_install ghostty
         ;;
         ubuntu)
-            apt-get install -y ghostty
+            sudo apt-get install -y ghostty
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -40,10 +98,10 @@ function setup_tmux {
     # install tmux
     case $OS_DISTRO in
         macos)
-            brew install tmux
+            brew_install tmux
         ;;
         ubuntu)
-            apt-get install -y tmux
+            sudo apt-get install -y tmux
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -61,10 +119,10 @@ function setup_nvim {
     # install neovim
     case $OS_DISTRO in
         macos)
-            brew install neovim ripgrep
+            brew_install neovim ripgrep
         ;;
         ubuntu)
-            apt-get install -y neovim ripgrep
+            sudo apt-get install -y neovim ripgrep
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -77,10 +135,10 @@ function setup_r {
     # install R
     case $OS_DISTRO in
         macos)
-            brew install R
+            brew_install R
         ;;
         ubuntu)
-            apt-get install -y R
+            sudo apt-get install -y R
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -117,7 +175,7 @@ esac
 # ensure pre-requisite software are installed: homebrew, stow
 ret=$(command -v stow)
 if [[ $? -ne 0 ]]; then
-    brew install stow
+    brew_install stow
 fi
 
 ret=$(command -v brew)
@@ -126,7 +184,12 @@ if [[ $? -ne 0 ]]; then
 fi
 
 setup_funcs=$(grep -e "^function" $0 | cut -d' ' -f2)
-for comp in $@; do
+comps="$*"
+# Ensure node is installed
+if [[ ! -d $HOME/.nvm ]]; then
+    [[ ! $comps =~ "*node*" ]] && comps="node $comps"
+fi
+for comp in $comps; do
     # validate the component specified by user is supported
     setup_func="setup_$(echo $comp | tr '[:upper:]' '[:lower:]')"
     ret=$(echo $setup_funcs | grep -q -w $setup_func)
@@ -138,7 +201,7 @@ for comp in $@; do
     echo "=================================================="
     echo "= Setting up $comp...                             "
     echo "=================================================="
-    stow $comp
+    [[ -d $comp ]] && stow $comp
     eval $setup_func
     echo "=================================================="
     echo "= $comp setup done!                               "
