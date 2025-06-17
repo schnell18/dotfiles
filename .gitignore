@@ -1,0 +1,24 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Archive files
+*.tgz
+*.bz2
+*.zip
+*.7z
+*.rar
+
+# misc
+*.bak
+*.pid
+*.log
+*.so
+*.DS_STORE

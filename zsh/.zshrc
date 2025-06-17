@@ -1,19 +1,19 @@
 setup_alias ()
 {
-  local al=$1
-  local cmd=$2
-  $(command -v $cmd >/dev/null 2>&1)
-  if [ $? -eq 0 ]; then
-    alias $al=$cmd
-  fi
+    local al=$1
+    local cmd=$2
+    $(command -v $cmd >/dev/null 2>&1)
+    if [ $? -eq 0 ]; then
+        alias $al=$cmd
+    fi
 }
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$HOME/go/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/go/bin:/usr/local/bin:$PATH
 
 # load sensitive settings from ~/.config/zsh/.szshrc
 if [ -f ~/.config/zsh/.szshrc ]; then
-  source ~/.config/zsh/.szshrc
+    source ~/.config/zsh/.szshrc
 fi
 
 # Uncomment the following line to enable command auto-correction.
@@ -41,9 +41,9 @@ setup_alias k kubectl
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+    export EDITOR='vim'
 else
-  export EDITOR='nvim'
+    export EDITOR='nvim'
 fi
 
 # export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
@@ -57,23 +57,23 @@ export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
 
 # gvm setup
 if [ -d $HOME/.gvm ]; then
-  export PATH="$HOME/.gvm/bin:$PATH"
-  [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+    export PATH="$HOME/.gvm/bin:$PATH"
+    [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 fi
 
 # nvm setup
 if [ -d $HOME/.nvm ]; then
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
 # sdkman setup
 if [ -d $HOME/.sdkman ]; then
-  export SDKMAN_DIR="$HOME/.sdkman"
-  [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-  export HOMEBREW_BOTTLE_DOMAIN=''
-  export JAVA_HOME=$HOME/.sdkman/candidates/java/current
+    export SDKMAN_DIR="$HOME/.sdkman"
+    [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+    export HOMEBREW_BOTTLE_DOMAIN=''
+    export JAVA_HOME=$HOME/.sdkman/candidates/java/current
 fi
 
 

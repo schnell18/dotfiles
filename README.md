@@ -1,19 +1,21 @@
 # Introduction
 
-Manage config files using [stow][1]. The general prodecure to enable
+Manage config files using [stow][1]. The general procedure to enable
 stow-managed application config is:
 
 - clone [dotfiles][3] project
 - change directory to `~/dotfiles` or whatever you see fit
-- run `stow TOOL_NAME`
-- do any extra application-specific setup
+- run `./setup.sh TOOL_NAME`
 
 Here is the sequence of commands for your reference:
 
     cd $HOME
     git clone https://github.com/schnell18/dotfiles.git
     cd dotfiles
-    stow zsh
+    ./setup.sh zsh
+
+The `setup.sh` script automates the installation of the tool, its dependencies
+and configure it using the preset configuration file.
 
 Reference: [Using GNU Stow to manage your dotfiles][2].
 
@@ -34,7 +36,7 @@ Reference: [Using GNU Stow to manage your dotfiles][2].
 - zsh
 
 ## Recommended tools
-The following softwares are recommended:
+The following software is recommended:
 
 - [jq][4]
 - [tmux][5]
@@ -48,12 +50,15 @@ The following softwares are recommended:
 
 ## Extra setup instructions
 
+Instructions in this section are necessary only if the `setup.sh` script
+doesn't work.
+
 While running `stow TOOL_NAME` is sufficient for most tools, some tools do
 require additional setup. This section details the extra instructions to follow
 for such tools on MacOS. Adapt the commands to your own OS distribution.
 
     # misc tools setup
-    # 1. install jq lsd regrep curl
+    # 1. install jq lsd ripgrep curl
     # 2. powerlevel10k setup
 
     # zsh setup
@@ -65,7 +70,7 @@ for such tools on MacOS. Adapt the commands to your own OS distribution.
     # 2. configure tmux
 
     # python setup
-    # 1. install miniconda
+    # 1. install uv
 
     # golang setup
     # 1. install gvm
@@ -82,14 +87,32 @@ for such tools on MacOS. Adapt the commands to your own OS distribution.
 ### tmux
 After you stow tmux, you need clone the sub modules of tmux by:
 
-    cd ~/dotfiles/tmux/.config/tmux
+    cd ~/dotfiles/
+    git submodule init
     git submodule update
 
 On first launch of tmux, you press `C a I`(Control a Shift i) to install plugins.
+Or if it doesn't work, you install the required tmux plugins manually as follows:
+
+    cd ~/dotfiles/tmux/.config/tmux
+    git submodule init
+    git submodule update
+
+Then relaunch tmux to let the plugins take effect.
+
 
 ### neovim
+
 dotfiles now links to the neovim config managed by nvchad, plugin install occur
-on firt time neovim is started.
+on first time neovim is started.
+
+### Python w/ uv
+
+On macOS and Linux type this command to install uv, which is a lightning fast
+package manager for Python:
+
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
 
 ## Complete setup example
 
