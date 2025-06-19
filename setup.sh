@@ -16,7 +16,7 @@ function ensure_install {
             ;;
             arch)
                 if ! pacman -Q "$PKG" >/dev/null 2>&1; then
-                    sudo pacman -S --noconfirm "$PKG"
+                    sudo pacman -S --noconfirm --needed "$PKG"
                 fi
             ;;
             *)
@@ -49,10 +49,10 @@ function setup_golang {
             ensure_install bison go
         ;;
         ubuntu)
-            sudo apt-get install -y bison golang-go
+            ensure_install bison golang-go
         ;;
         arch)
-            sudo pacman -S --noconfirm bison go
+            ensure_install bison go
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -74,10 +74,10 @@ function setup_lua {
             ensure_install luarocks
         ;;
         ubuntu)
-            sudo apt-get install -y luarocks
+            ensure_install luarocks
         ;;
         arch)
-            sudo pacman -S --noconfirm luarocks
+            ensure_install luarocks
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -108,10 +108,10 @@ function setup_ghostty {
             ensure_install ghostty
         ;;
         ubuntu)
-            sudo apt-get install -y ghostty
+            ensure_install ghostty
         ;;
         arch)
-            sudo pacman -S --noconfirm ghostty
+            ensure_install ghostty
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -127,10 +127,10 @@ function setup_tmux {
             ensure_install tmux
         ;;
         ubuntu)
-            sudo apt-get install -y tmux
+            ensure_install ghostty
         ;;
         arch)
-            sudo pacman -S --noconfirm tmux
+            ensure_install ghostty
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -162,7 +162,7 @@ function setup_nvim {
             ensure_install ripgrep
         ;;
         arch)
-            sudo pacman -S --noconfirm neovim
+            ensure_install neovim ripgrep
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -196,10 +196,10 @@ function setup_r {
             ensure_install R
         ;;
         ubuntu)
-            sudo apt-get install -y R
+            ensure_install R
         ;;
         arch)
-            sudo pacman -S --noconfirm r
+            ensure_install r
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
