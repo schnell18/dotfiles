@@ -14,6 +14,11 @@ function ensure_install {
                     sudo apt-get install -y "$PKG"
                 fi
             ;;
+            arch)
+                if ! pacman -Q "$PKG" >/dev/null 2>&1; then
+                    sudo pacman -S --noconfirm "$PKG"
+                fi
+            ;;
             *)
                 echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
                 exit 1
@@ -21,16 +26,6 @@ function ensure_install {
         esac
     done
 }
-
-# This function doesn't fail installation when package has been installed.
-# function brew_install {
-#     PKGS="$*"
-#     for PKG in $PKGS; do
-#         if ! brew list "$PKG" >/dev/null 2>&1; then
-#             brew install "$PKG"
-#         fi
-#     done
-# }
 
 function get_os_dist {
     if [ -f /etc/os-release ]; then
@@ -56,6 +51,9 @@ function setup_golang {
         ubuntu)
             sudo apt-get install -y bison golang-go
         ;;
+        arch)
+            sudo pacman -S --noconfirm bison go
+        ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
             exit 1
@@ -77,6 +75,9 @@ function setup_lua {
         ;;
         ubuntu)
             sudo apt-get install -y luarocks
+        ;;
+        arch)
+            sudo pacman -S --noconfirm luarocks
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -109,6 +110,9 @@ function setup_ghostty {
         ubuntu)
             sudo apt-get install -y ghostty
         ;;
+        arch)
+            sudo pacman -S --noconfirm ghostty
+        ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
             exit 1
@@ -124,6 +128,9 @@ function setup_tmux {
         ;;
         ubuntu)
             sudo apt-get install -y tmux
+        ;;
+        arch)
+            sudo pacman -S --noconfirm tmux
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -154,6 +161,9 @@ function setup_nvim {
             fi
             ensure_install ripgrep
         ;;
+        arch)
+            sudo pacman -S --noconfirm neovim
+        ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
             exit 1
@@ -168,6 +178,9 @@ function setup_python {
         ;;
         ubuntu)
             ensure_install python3-venv
+        ;;
+        arch)
+            echo "All set"
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
@@ -184,6 +197,9 @@ function setup_r {
         ;;
         ubuntu)
             sudo apt-get install -y R
+        ;;
+        arch)
+            sudo pacman -S --noconfirm r
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2

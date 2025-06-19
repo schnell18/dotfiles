@@ -1,8 +1,8 @@
 # Introduction
 
 This project automates common development tools installation and configuration
-under MacOS and Linux (currently only Ubuntu is supported) by leveraging
-[stow][1]. The general procedure to enable stow-managed tools is:
+under MacOS and Linux (currently only Ubuntu and Arch are supported) by
+leveraging [stow][1]. The general procedure to enable stow-managed tools is:
 
 - clone [dotfiles][3] project
 - change directory to `~/dotfiles` or whatever you see fit
@@ -17,24 +17,21 @@ Here is the sequence of commands for your reference:
 
 The `setup.sh` script automates the installation of the tool, its dependencies
 and configure it using the preset configuration file.
+To setup golang, git, lua, tmux, nvim in one go:
 
-Reference: [Using GNU Stow to manage your dotfiles][2].
+    cd dotfiles
+    ./setup.sh golang git lua tmux nvim
 
-## Managed tool catalog
+To list the supported tools:
 
-- alacritty
-- dlv
-- ghostty
-- git
-- jupyter
-- latexmk
-- lsd
-- npm
-- nvim
-- podman
-- tmux
-- zathura
-- zsh
+    cd dotfiles
+    grep -e "^function setup_" setup.sh | cut -d' ' -f2 | cut -d'_' -f2
+
+# Manual Setup
+
+The `setup.sh` has automated all the tasks described in this section. Avoid
+manual setup using instructions in this section unless the `setup.sh` script
+doesn't work.
 
 ## Recommended tools
 The following software is recommended:
@@ -50,9 +47,6 @@ The following software is recommended:
 - [lsd][14]
 
 ## Extra setup instructions
-
-Instructions in this section are necessary only if the `setup.sh` script
-doesn't work.
 
 While running `stow TOOL_NAME` is sufficient for most tools, some tools do
 require additional setup. This section details the extra instructions to follow
@@ -114,13 +108,8 @@ package manager for Python:
 
     curl -LsSf https://astral.sh/uv/install.sh | sh
 
-
-## Complete setup example
-
-This section presents the complete instructions to setup .zsh CLI environment
-for golang, Python development using neovim.
-
-
+# Reference
+Reference: [Using GNU Stow to manage your dotfiles][2].
 
 [1]: https://www.gnu.org/software/stow/
 [2]: http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html
