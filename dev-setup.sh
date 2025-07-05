@@ -9,8 +9,7 @@ set -e
 
 # Install uv and create a project-scoped venv with pre-commit installed
 export PATH="$HOME/.local/bin:$PATH"
-ret=$(command -v uv)
-if [[ $? -ne 0 ]]; then
+if ! command -v uv >/dev/null 2>&1; then
     # On macOS and Linux.
     curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
