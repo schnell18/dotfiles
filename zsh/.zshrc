@@ -98,3 +98,4 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [[ -s "/Users/justin/.gvm/scripts/gvm" ]] && source "/Users/justin/.gvm/scripts/gvm"
+export PATH="$HOME/.cargo/bin:$PATH"
