@@ -6,26 +6,40 @@ leveraging [stow][1]. The general procedure to enable stow-managed tools is:
 
 - clone [dotfiles][3] project
 - change directory to `~/dotfiles` or whatever you see fit
-- run `./setup.sh TOOL_NAME`
+- run `./setup.sh` with appropriate options
 
 Here is the sequence of commands for your reference:
 
     cd $HOME
     git clone https://github.com/schnell18/dotfiles.git
     cd dotfiles
-    ./setup.sh zsh
+    ./setup.sh -c zsh
 
-The `setup.sh` script automates the installation of the tool, its dependencies
-and configure it using the preset configuration file.
-To setup golang, git, lua, tmux, nvim in one go:
+## Usage
 
-    cd dotfiles
-    ./setup.sh golang git lua tmux nvim
+The `setup.sh` script supports the following command line options:
 
-To list the supported tools:
+- `-h`: Show usage information
+- `-l`: List all supported components
+- `-c COMPONENT`: Install and configure the specified component
 
-    cd dotfiles
-    grep -e "^function setup_" setup.sh | cut -d' ' -f2 | cut -d'_' -f2
+### Examples
+
+To show help:
+
+    ./setup.sh -h
+
+To list all supported components:
+
+    ./setup.sh -l
+
+To setup a single component:
+
+    ./setup.sh -c zsh
+
+To setup multiple components (space-separated):
+
+    ./setup.sh -c "golang git lua tmux nvim"
 
 # Manual Setup
 
