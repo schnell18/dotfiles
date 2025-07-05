@@ -127,6 +127,7 @@ function setup {
 source lib/ghostty.sh
 source lib/git.sh
 source lib/golang.sh
+source lib/java.sh
 source lib/lua.sh
 source lib/node.sh
 source lib/nvim.sh
@@ -140,29 +141,29 @@ source lib/tmux.sh
 OPTSTRING=":lhc:"
 
 while getopts ${OPTSTRING} opt; do
-  case ${opt} in
-    l)
-      list
-      exit 0
-      ;;
-    c)
-      setup ${OPTARG}
-      exit 0
-      ;;
-    h)
-      usage
-      exit 0
-      ;;
-    \?)
-      echo "Invalid option: -${OPTARG}."
-      usage
-      exit 1
-      ;;
-    :)
-      echo "Component is mandatory, use -l to find supported components!" 1>&2
-      exit 2
-      ;;
-  esac
+    case ${opt} in
+        l)
+            list
+            exit 0
+            ;;
+        c)
+            setup ${OPTARG}
+            exit 0
+            ;;
+        h)
+            usage
+            exit 0
+            ;;
+        \?)
+            echo "Invalid option: -${OPTARG}."
+            usage
+            exit 1
+            ;;
+        :)
+            echo "Component is mandatory, use -l to find supported components!" 1>&2
+            exit 2
+            ;;
+    esac
 done
 
 usage
