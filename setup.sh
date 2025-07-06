@@ -128,6 +128,7 @@ source lib/ghostty.sh
 source lib/git.sh
 source lib/golang.sh
 source lib/java.sh
+source lib/latex.sh
 source lib/lua.sh
 source lib/node.sh
 source lib/nvim.sh
