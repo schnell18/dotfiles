@@ -18,6 +18,7 @@ function __dotfiles_setup_latex {
             # Install comprehensive LaTeX support
             ensure_install \
                 texlive-latex \
+                texlive-xetex \
                 texlive-latexextra \
                 texlive-latexrecommended \
                 texlive-fontsrecommended \
