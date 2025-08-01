@@ -2,7 +2,7 @@ function __dotfiles_setup_r {
     # install R
     case $OS_DISTRO in
         macos)
-            ensure_install R
+            ensure_install r
         ;;
         ubuntu)
             ensure_install R

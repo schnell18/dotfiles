@@ -132,6 +132,7 @@ source lib/latex.sh
 source lib/lua.sh
 source lib/node.sh
 source lib/nvim.sh
+source lib/podman.sh
 source lib/python.sh
 source lib/r.sh
 source lib/rust.sh
