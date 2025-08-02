@@ -5,7 +5,7 @@ function __dotfiles_setup_r {
             ensure_install r
         ;;
         ubuntu)
-            ensure_install R
+            ensure_install r-base r-base-dev
         ;;
         arch)
             ensure_install r
