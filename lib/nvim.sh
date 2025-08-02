@@ -36,7 +36,6 @@ function __dotfiles_setup_nvim {
     nvim --headless "+Lazy! sync" +qa
     nvim --headless \
       +"lua require('mason').setup()" \
-      +"lua require('mason-tool-installer').run_on_start()" \
       +"autocmd User MasonToolsUpdateCompleted qa" \
       +sleepinfinite
 }
