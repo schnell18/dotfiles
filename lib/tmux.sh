@@ -5,10 +5,10 @@ function __dotfiles_setup_tmux {
             ensure_install tmux
         ;;
         ubuntu)
-            ensure_install ghostty
+            ensure_install tmux
         ;;
         arch)
-            ensure_install ghostty
+            ensure_install tmux
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
