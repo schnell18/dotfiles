@@ -6,12 +6,16 @@ function __dotfiles_setup_nvim {
         ;;
         ubuntu)
             if [[ ! -f /opt/nvim/bin/nvim ]]; then
-                curl -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz \
-                     -o /tmp/nvim-linux-x86_64.tar.gz
+                ARCH=$(uname -m)
+                if [ $ARCH == "aarch64" ]; then
+                    ARCH="arm64"
+                fi
+                curl -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux-${ARCH}.tar.gz \
+                     -o /tmp/nvim-linux-${ARCH}.tar.gz
                 sudo rm -rf /opt/nvim
-                sudo tar -C /opt -xzf /tmp/nvim-linux-x86_64.tar.gz
-                sudo mv /opt/nvim-linux-x86_64 /opt/nvim
-                rm -f /tmp/nvim-linux-x86_64.tar.gz
+                sudo tar -C /opt -xzf /tmp/nvim-linux-${ARCH}.tar.gz
+                sudo mv /opt/nvim-linux-${ARCH} /opt/nvim
+                rm -f /tmp/nvim-linux-${ARCH}.tar.gz
             fi
             ensure_install ripgrep
         ;;
