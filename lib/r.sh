@@ -17,7 +17,7 @@ function __dotfiles_setup_r {
     esac
 
     # install essential packages
-    Rscript -e 'install.packages(c("languageserver"))'
+    Rscript -e 'dir.create(Sys.getenv("R_LIBS_USER"), recursive = TRUE, showWarnings = FALSE); install.packages("languageserver", lib = Sys.getenv("R_LIBS_USER"))'
 }
 
 
