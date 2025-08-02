@@ -32,10 +32,6 @@ function __dotfiles_setup_nvim {
     git submodule update
     (cd ./nvim/.config/nvim/ && git submodule init && git submodule update)
 
-    # install plugins and lsp servers
+    # install plugins
     nvim --headless "+Lazy! sync" +qa
-    nvim --headless \
-      +"lua require('mason').setup()" \
-      +"autocmd User MasonToolsUpdateCompleted qa" \
-      +sleepinfinite
 }
