@@ -12,7 +12,8 @@ function __dotfiles_setup_latex {
                 texlive-full \
                 texlive-latex-extra \
                 texlive-fonts-recommended \
-                texlive-fonts-extra
+                texlive-fonts-extra \
+		latexmk
         ;;
         arch)
             # Install comprehensive LaTeX support
@@ -23,7 +24,8 @@ function __dotfiles_setup_latex {
                 texlive-latexrecommended \
                 texlive-fontsrecommended \
                 texlive-fontsextra \
-                texlive-bibtexextra
+                texlive-bibtexextra \
+	        texlive-binextra
         ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
