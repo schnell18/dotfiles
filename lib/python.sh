@@ -17,5 +17,6 @@ function __dotfiles_setup_python {
             exit 1
         ;;
     esac
+    uv tool install ruff@latest
 }
 
