@@ -77,6 +77,11 @@ function __dotfiles_setup_golang {
         gotestsum \
         "gotest.tools/gotestsum@latest"
 
+    # golangci-lint
+    ensure_go_cmd_installed \
+        golangci-lint \
+        "github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.3.1"
+
     # setup PATH
     ensure_go_utils_in_path
 }
@@ -92,15 +97,15 @@ ensure_go_cmd_installed() {
 }
 
 ensure_go_utils_in_path() {
-  if ! grep -q 'export PATH="$HOME/go/bin:$PATH"' "$HOME/.bashrc" 2>/dev/null; then
-    echo 'export PATH="$HOME/go/bin:$PATH"' >>"$HOME/.bashrc"
-    echo "Added go utils to PATH in ~/.bashrc"
-    echo "Relaunch bash to take effect!!!"
-  fi
-  if ! grep -q 'export PATH="$HOME/go/bin:$PATH"' "$HOME/.zshrc" 2>/dev/null; then
-    echo 'export PATH="$HOME/go/bin:$PATH"' >>"$HOME/.zshrc"
-    echo "Added go utils to PATH in ~/.zshrc"
-    echo "Relaunch zsh to take effect!!!"
-  fi
+    if ! grep -q 'export PATH="$HOME/go/bin:$PATH"' "$HOME/.bashrc" 2>/dev/null; then
+        echo 'export PATH="$HOME/go/bin:$PATH"' >>"$HOME/.bashrc"
+        echo "Added go utils to PATH in ~/.bashrc"
+        echo "Relaunch bash to take effect!!!"
+    fi
+    if ! grep -q 'export PATH="$HOME/go/bin:$PATH"' "$HOME/.zshrc" 2>/dev/null; then
+        echo 'export PATH="$HOME/go/bin:$PATH"' >>"$HOME/.zshrc"
+        echo "Added go utils to PATH in ~/.zshrc"
+        echo "Relaunch zsh to take effect!!!"
+    fi
 }
 
