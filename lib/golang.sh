@@ -14,13 +14,15 @@ function __dotfiles_setup_golang {
                 elif [ $ARCH == "x86_64" ]; then
                     ARCH="amd64"
                 fi
-                curl -L https://go.dev/dl/${GO_VER}.linux-${ARCH}.tar.gz \
-                    -o /tmp/${GO_VER}.linux-${ARCH}.tar.gz
+                GO_BIN_FILE_BASE_NAME=go${GO_VER}.linux-${ARCH}
+                GO_BIN_FILE_NAME=${GO_BIN_FILE_BASE_NAME}.tar.gz
+                curl -L https://go.dev/dl/${GO_BIN_FILE_NAME} \
+                    -o /tmp/${GO_BIN_FILE_NAME}
                 sudo rm -rf /usr/local/go
-                sudo tar -C /usr/local/ -xzf /tmp/${GO_VER}.linux-${ARCH}.tar.gz
-                sudo mv /usr/local/${GO_VER}.linux-${ARCH} /usr/local/go
+                sudo tar -C /usr/local/ -xzf /tmp/${GO_BIN_FILE_NAME}
+                sudo mv /usr/local/${GO_BIN_FILE_BASE_NAME} /usr/local/go
                 sudo ln -sf /usr/local/go/bin/go /usr/local/bin/go
-                rm -f /tmp/${GO_VER}.linux-${ARCH}.tar.gz
+                rm -f /tmp/${GO_BIN_FILE_NAME}
             fi
         ;;
         arch)
