@@ -4,7 +4,24 @@ function __dotfiles_setup_golang {
             ensure_install bison go
         ;;
         ubuntu)
-            ensure_install bison golang-go
+            ensure_install bison
+            # latest golang tends to be dated, install a recent one
+            if [[ ! -f /usr/local/go/bin/go ]]; then
+                GO_VER="1.24.6"
+                ARCH=$(uname -m)
+                if [ $ARCH == "aarch64" ]; then
+                    ARCH="arm64"
+                elif [ $ARCH == "x86_64" ]; then
+                    ARCH="amd64"
+                fi
+                curl -L https://go.dev/dl/${GO_VER}.linux-${ARCH}.tar.gz \
+                    -o /tmp/${GO_VER}.linux-${ARCH}.tar.gz
+                sudo rm -rf /usr/local/go
+                sudo tar -C /usr/local/ -xzf /tmp/${GO_VER}.linux-${ARCH}.tar.gz
+                sudo mv /usr/local/${GO_VER}.linux-${ARCH} /usr/local/go
+                sudo ln -sf /usr/local/go/bin/go /usr/local/bin/go
+                rm -f /tmp/${GO_VER}.linux-${ARCH}.tar.gz
+            fi
         ;;
         arch)
             ensure_install bison go
@@ -36,7 +53,5 @@ function __dotfiles_setup_golang {
     # gotestsum
     go install gotest.tools/gotestsum@latest
 
-    # gvm install go1.23
-    # gvm use go1.23 --default
 }
 
