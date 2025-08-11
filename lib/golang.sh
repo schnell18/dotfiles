@@ -20,7 +20,6 @@ function __dotfiles_setup_golang {
                     -o /tmp/${GO_BIN_FILE_NAME}
                 sudo rm -rf /usr/local/go
                 sudo tar -C /usr/local/ -xzf /tmp/${GO_BIN_FILE_NAME}
-                sudo mv /usr/local/${GO_BIN_FILE_BASE_NAME} /usr/local/go
                 sudo ln -sf /usr/local/go/bin/go /usr/local/bin/go
                 rm -f /tmp/${GO_BIN_FILE_NAME}
             fi
