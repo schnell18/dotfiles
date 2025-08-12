@@ -82,6 +82,12 @@ function __dotfiles_setup_golang {
         golangci-lint \
         "github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.3.1"
 
+    # golang-migrate
+    ensure_go_cmd_installed \
+        migrate \
+        "github.com/golang-migrate/migrate/v4/cmd/migrate@v4.18.3" \
+        postgres,pgxv5,cockroachdb,mysql
+
     # setup PATH
     ensure_go_utils_in_path
 }
@@ -89,10 +95,15 @@ function __dotfiles_setup_golang {
 ensure_go_cmd_installed() {
     cmd_name=$1
     cmd_url=$2
+    build_tags=$3
 
     if ! command -v $cmd_name &>/dev/null; then
         echo "Setup ${cmd_name}..."
-        go install $cmd_url
+        if [ -z $build_tags ]; then
+            go install $cmd_url
+        else
+            go install --tags "$build_tags" $cmd_url
+        fi
     fi
 }
 
