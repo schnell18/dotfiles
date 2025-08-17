@@ -88,6 +88,11 @@ function __dotfiles_setup_golang {
         "github.com/golang-migrate/migrate/v4/cmd/migrate@v4.18.3" \
         postgres,pgxv5,cockroachdb,mysql
 
+    # sqlc
+    ensure_go_cmd_installed \
+        sqlc \
+        "github.com/sqlc-dev/sqlc/cmd/sqlc@latest"
+
     # setup PATH
     ensure_go_utils_in_path
 }
