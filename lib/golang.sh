@@ -93,6 +93,16 @@ function __dotfiles_setup_golang {
         sqlc \
         "github.com/sqlc-dev/sqlc/cmd/sqlc@latest"
 
+    # oapi-codegen
+    ensure_go_cmd_installed \
+        oapi-codegen \
+        "github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest"
+
+    # ogen
+    ensure_go_cmd_installed \
+        ogen \
+        "github.com/ogen-go/ogen/cmd/ogen@latest"
+
     # setup PATH
     ensure_go_utils_in_path
 }
