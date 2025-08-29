@@ -14,7 +14,7 @@ function ensure_install {
             ;;
             ubuntu)
                 if ! dpkg -s "$PKG" >/dev/null 2>&1; then
-                    sudo apt-get install -y "$PKG"
+                    sudo apt-get update && sudo apt-get install -y "$PKG"
                 fi
             ;;
             arch)
@@ -124,6 +124,7 @@ function setup {
     done
 }
 
+source lib/ansible.sh
 source lib/ghostty.sh
 source lib/git.sh
 source lib/golang.sh
@@ -139,6 +140,7 @@ source lib/r.sh
 source lib/rust.sh
 source lib/tmux.sh
 source lib/vagrant.sh
+source lib/kubectl.sh
 
 [[ -z $DEBUG_SETUP ]] || set -x
 
