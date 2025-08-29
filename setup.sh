@@ -138,6 +138,7 @@ source lib/python.sh
 source lib/r.sh
 source lib/rust.sh
 source lib/tmux.sh
+source lib/vagrant.sh
 
 [[ -z $DEBUG_SETUP ]] || set -x
 
