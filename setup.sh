@@ -141,6 +141,7 @@ source lib/rust.sh
 source lib/tmux.sh
 source lib/vagrant.sh
 source lib/kubectl.sh
+source lib/helm.sh
 
 [[ -z $DEBUG_SETUP ]] || set -x
 
