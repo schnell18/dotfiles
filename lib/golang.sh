@@ -9,7 +9,7 @@ function __dotfiles_setup_golang {
             if [[ ! -f /usr/local/go/bin/go ]]; then
                 GO_VER=$GO_VERSION
                 if [[ -z $GO_VER ]]; then
-                    GO_VER="1.24.6"
+                    GO_VER="1.25.0"
                 fi
                 ARCH=$(uname -m)
                 if [ $ARCH == "aarch64" ]; then

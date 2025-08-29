@@ -84,3 +84,4 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 [[ -s "/Users/justin/.gvm/scripts/gvm" ]] && source "/Users/justin/.gvm/scripts/gvm"
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
