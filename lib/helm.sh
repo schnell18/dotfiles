@@ -10,6 +10,9 @@ function __dotfiles_setup_helm {
             fi
             ensure_install helm
         ;;
+        macos)
+            ensure_install helm
+        ;;
         *)
             echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
             exit 1

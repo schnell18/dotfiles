@@ -1,17 +1,20 @@
 function __dotfiles_setup_kubectl {
-    KUBE_VER=$KUBERNETES_VERSION
-    if [[ -z $KUBE_VER ]]; then
-        KUBE_VER="v1.31"
-    fi
     case $OS_DISTRO in
         ubuntu)
             if [ ! -f /etc/apt/sources.list.d/kubernetes.list ]; then
+                KUBE_VER=$KUBERNETES_VERSION
+                if [[ -z $KUBE_VER ]]; then
+                    KUBE_VER="v1.31"
+                fi
                 # install kubernetes apt repo
                 curl -fsSL "https://pkgs.k8s.io/core:/stable:/$KUBE_VER/deb/Release.key" | \
                     sudo gpg --dearmor -o /usr/share/keyrings/kubernetes-apt-keyring.gpg
                 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/$KUBE_VER/deb/ /" | \
                     sudo tee /etc/apt/sources.list.d/kubernetes.list
             fi
+            ensure_install kubectl
+        ;;
+        macos)
             ensure_install kubectl
         ;;
         *)
