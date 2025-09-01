@@ -142,6 +142,7 @@ source lib/tmux.sh
 source lib/vagrant.sh
 source lib/kubectl.sh
 source lib/helm.sh
+source lib/azurecli.sh
 
 [[ -z $DEBUG_SETUP ]] || set -x
 
