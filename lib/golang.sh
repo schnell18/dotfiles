@@ -1,40 +1,51 @@
 function __dotfiles_setup_golang {
-    case $OS_DISTRO in
-        macos)
-            ensure_install bison go
-        ;;
-        ubuntu)
-            ensure_install bison
-            # latest golang tends to be dated, install a recent one
-            if [[ ! -f /usr/local/go/bin/go ]]; then
-                GO_VER=$GO_VERSION
-                if [[ -z $GO_VER ]]; then
-                    GO_VER="1.25.0"
-                fi
-                ARCH=$(uname -m)
-                if [ $ARCH == "aarch64" ]; then
-                    ARCH="arm64"
-                elif [ $ARCH == "x86_64" ]; then
-                    ARCH="amd64"
-                fi
-                GO_BIN_FILE_BASE_NAME=go${GO_VER}.linux-${ARCH}
-                GO_BIN_FILE_NAME=${GO_BIN_FILE_BASE_NAME}.tar.gz
-                curl -L https://go.dev/dl/${GO_BIN_FILE_NAME} \
-                    -o /tmp/${GO_BIN_FILE_NAME}
-                sudo rm -rf /usr/local/go
-                sudo tar -C /usr/local/ -xzf /tmp/${GO_BIN_FILE_NAME}
-                sudo ln -sf /usr/local/go/bin/go /usr/local/bin/go
-                rm -f /tmp/${GO_BIN_FILE_NAME}
-            fi
-        ;;
-        arch)
-            ensure_install bison go
-        ;;
-        *)
-            echo "Unsupported OS DISTRO: $OS_DISTRO" 1>&2
-            exit 1
-        ;;
+    local requested_version="${GO_VERSION:-1.25.7}"
+
+    # Detect OS and architecture
+    local os arch
+    case "$(uname)" in
+        Darwin) os="darwin" ;;
+        Linux)  os="linux" ;;
+        *)      echo "Unsupported OS: $(uname)" >&2; exit 1 ;;
     esac
+    case "$(uname -m)" in
+        x86_64)        arch="amd64" ;;
+        aarch64|arm64) arch="arm64" ;;
+        *)             echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+    esac
+
+    # Check installed version
+    local installed_version=""
+    if command -v go &>/dev/null; then
+        installed_version=$(go version | sed -n 's/.*go\([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\).*/\1/p')
+    fi
+
+    __go_reinstalled=false
+    if [[ "$installed_version" == "$requested_version" ]]; then
+        echo "Go $requested_version is already installed, skipping."
+    else
+        if [[ -n "$installed_version" ]]; then
+            echo "Go version mismatch: installed=$installed_version, requested=$requested_version"
+            echo "Replacing with Go $requested_version..."
+        else
+            echo "Installing Go $requested_version..."
+        fi
+        local tarball="go${requested_version}.${os}-${arch}.tar.gz"
+        curl -L "https://go.dev/dl/${tarball}" -o "/tmp/${tarball}"
+        sudo rm -rf /usr/local/go
+        sudo tar -C /usr/local/ -xzf "/tmp/${tarball}"
+        sudo ln -sf /usr/local/go/bin/go /usr/local/bin/go
+        rm -f "/tmp/${tarball}"
+        __go_reinstalled=true
+        echo "Go $requested_version installed successfully."
+    fi
+
+    ensure_install bison
+
+    # gopls
+    ensure_go_cmd_installed \
+        gopls \
+        "golang.org/x/tools/gopls@latest"
 
     # delve
     ensure_go_cmd_installed \
@@ -80,27 +91,6 @@ function __dotfiles_setup_golang {
     ensure_go_cmd_installed \
         golangci-lint \
         "github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.3.1"
-
-    # golang-migrate
-    ensure_go_cmd_installed \
-        migrate \
-        "github.com/golang-migrate/migrate/v4/cmd/migrate@v4.18.3" \
-        postgres,pgxv5,cockroachdb,mysql
-
-    # sqlc
-    ensure_go_cmd_installed \
-        sqlc \
-        "github.com/sqlc-dev/sqlc/cmd/sqlc@latest"
-
-    # oapi-codegen
-    ensure_go_cmd_installed \
-        oapi-codegen \
-        "github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest"
-
-    # ogen
-    ensure_go_cmd_installed \
-        ogen \
-        "github.com/ogen-go/ogen/cmd/ogen@latest"
 
     # setup PATH
     ensure_go_utils_in_path
